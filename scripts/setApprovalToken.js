@@ -6,16 +6,16 @@ async function main(){
     console.log("owner=",owner.address);
     //Configuration
     const alchemy= new ethers.providers.AlchemyProvider("maticmum",process.env.ALCHEMY_API_KEY);
-    const userwallet= new ethers.Wallet(process.env.PRIVATE_KEY_ACCOUNT1, alchemy);
+    const userwallet= new ethers.Wallet(process.env.PRIVATE_KEY_ACCOUNT3, alchemy);
     const tokenContract= new ethers.Contract(contractadr,Tokenjson.abi,userwallet);
 
     //Transactions
     const gasPriceOracle = "https://gasstation-mainnet.matic.network";
     const gasPrice = await ethers.provider.getGasPrice(gasPriceOracle);
     
-    const estimate= await tokenContract.estimateGas.MySetApproval(process.env.CONTRACT_ADDRESS_AUCTION);
+    const estimate= await tokenContract.estimateGas.MySetApproval(process.env.CONTRACT_ADDRESS_MARKET);
     console.log("estimate=", estimate);
-    const tx = await tokenContract.MySetApproval(process.env.CONTRACT_ADDRESS_AUCTION, {gasPrice: gasPrice,
+    const tx = await tokenContract.MySetApproval(process.env.CONTRACT_ADDRESS_MARKET, {gasPrice: gasPrice,
         gasLimit: estimate.mul(6),});
     const rc = await tx.wait();
     console.log("result=", rc);

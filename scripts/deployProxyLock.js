@@ -18,16 +18,21 @@ async function main() {
 
   //await lock.deployed();
   //proxy
-  const Lock = await ethers.getContractFactory("Lock");
+  const Lock = await ethers.getContractFactory("MyContractProxy");
   console.log("Deploying Lock, ProxyAdmin, and then Proxy...");
-  const lockproxy = await upgrades.deployProxy(Lock, [unlockTime], { initializer: 'initialize' , value:lockedAmount});
+  //const lockproxy = await upgrades.deployProxy(Lock, [unlockTime], { initializer: 'initialize' , value:lockedAmount});
+  const lockproxy = await upgrades.deployProxy(Lock, [42], { initializer: 'initialize'});
   //console.log("Proxy of New lock deployed to:", lockproxy.address);
 
   console.log(
-    `Lock proxy with ${ethers.utils.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lockproxy.address}, with owner =  ${owner.address}`
+    `MyContract proxy with deployed to ${lockproxy.address}, with owner =  ${owner.address}`
   );
+
+  // console.log(
+  //   `Lock proxy with ${ethers.utils.formatEther(
+  //     lockedAmount
+  //   )}ETH and unlock timestamp ${unlockTime} deployed to ${lockproxy.address}, with owner =  ${owner.address}`
+  // );
 
   //wait for 5 block transactions to ensure deployment before verifying
    console.log(`Waiting for > 5 confirmation before Contract verification`);

@@ -16,13 +16,22 @@ async function main(){
     const version = await tokenContract.getVersion();
     console.log("version=", version);
     
-    const estimate= await tokenContract.estimateGas.safeMint("url1", process.env.CONTRACT_ADDRESS_MARKET);
+    const estimate= await tokenContract.estimateGas.safeMint("url3", process.env.CONTRACT_ADDRESS_MARKET);
     console.log("estimate=", estimate);
-    const tx = await tokenContract.safeMint("url1", process.env.CONTRACT_ADDRESS_MARKET, {gasPrice: gasPrice,
+    const tx = await tokenContract.safeMint("url3", process.env.CONTRACT_ADDRESS_MARKET, {gasPrice: gasPrice,
         gasLimit: estimate.mul(6),});
     const rc = await tx.wait();
     console.log("result=", rc);
     console.log("Minting new nft successfully");
+
+
+    // const estimate= await tokenContract.estimateGas.setTokenName("newName", "newSymb");
+    // console.log("estimate=", estimate);
+    // const tx = await tokenContract.setTokenName("newName", "newSymb", {gasPrice: gasPrice,
+    //     gasLimit: estimate.mul(6),});
+    // const rc = await tx.wait();
+    // console.log("result=", rc);
+    // console.log("changing name nft successfully");
 
     
 
